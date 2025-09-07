@@ -1,18 +1,18 @@
 #!/bin/sh
 set -e
 
-# Start tailscaled in userspace mode
-/usr/local/bin/tailscaled --state=/tmp/tailscaled.state --tun=userspace-networking &
+echo "[INFO] Starting tailscaled..."
+tailscaled --state=/tmp/tailscaled.state --tun=userspace-networking &
 
-# Wait for tailscaled to be ready
+# Wait a bit for tailscaled to initialize
 sleep 5
 
-# Run tailscale up with the auth key from environment
-/usr/local/bin/tailscale up \
+echo "[INFO] Authenticating to Tailscale..."
+tailscale up \
   --authkey=${TAILSCALE_AUTHKEY} \
   --hostname=render-node \
   --accept-routes \
   --accept-dns=false
 
-# Keep the container alive
-tail -f /dev/null
+echo "[INFO] Starting Flask app..."
+exec python /app.py
