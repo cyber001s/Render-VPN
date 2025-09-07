@@ -1,15 +1,21 @@
-# Use the Render example approach: run Tailscale userspace client
-FROM alpine:3.18
+# Base image
+FROM python:3.11-slim
 
-RUN apk add --no-cache curl bash iproute2
+# Install system dependencies
+RUN apt-get update && apt-get install -y curl iproute2 && rm -rf /var/lib/apt/lists/*
 
-# Install Tailscale (static binary, latest stable)
+# Install Flask
+RUN pip install flask
+
+# Install Tailscale (pinned release binary)
 RUN curl -fsSL https://pkgs.tailscale.com/stable/tailscale_1.64.0_amd64.tgz \
     | tar xz -C /usr/local/bin --strip-components=1
 
+# Copy entrypoint + app
 COPY entrypoint-tailscale.sh /entrypoint-tailscale.sh
+COPY app.py /app.py
 RUN chmod +x /entrypoint-tailscale.sh
 
-EXPOSE 80
-CMD ["/entrypoint-tailscale.sh"]
+EXPOSE 5000
 
+CMD ["/entrypoint-tailscale.sh"]
