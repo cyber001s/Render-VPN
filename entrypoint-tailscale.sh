@@ -1,3 +1,4 @@
+#!/bin/sh
 
 # This script starts tailscaled in userspace mode and then tailscale up
 # On Render you'll need to obtain an auth key or use interactive auth
