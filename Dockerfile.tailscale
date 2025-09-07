@@ -1,0 +1,9 @@
+# Use the Render example approach: run Tailscale userspace client
+FROM alpine:3.18
+RUN apk add --no-cache curl bash iproute2
+# Install tailscale (static binary) - pinned to a release in production
+# This is only a skeleton: see README-Tailscale.md for exact install commands and auth
+COPY entrypoint-tailscale.sh /entrypoint-tailscale.sh
+RUN chmod +x /entrypoint-tailscale.sh
+EXPOSE 80
+CMD ["/entrypoint-tailscale.sh"]
