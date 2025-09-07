@@ -14,5 +14,8 @@ tailscale up \
   --accept-routes \
   --accept-dns=false
 
+echo "[INFO] Tailscale node should now be active. Checking status..."
+tailscale status
+
 echo "[INFO] Starting Flask app..."
 exec python /app.py
