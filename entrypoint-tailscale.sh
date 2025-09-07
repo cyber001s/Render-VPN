@@ -4,7 +4,7 @@ set -e
 echo "[INFO] Starting tailscaled..."
 tailscaled --state=/tmp/tailscaled.state --tun=userspace-networking &
 
-# Wait a bit for tailscaled to initialize
+# Wait for tailscaled to boot
 sleep 5
 
 echo "[INFO] Authenticating to Tailscale..."
