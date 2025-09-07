@@ -14,8 +14,9 @@ RUN curl -fsSL https://pkgs.tailscale.com/stable/tailscale_1.64.0_amd64.tgz \
 # Copy entrypoint + app
 COPY entrypoint-tailscale.sh /entrypoint-tailscale.sh
 COPY app.py /app.py
+COPY wg_gen.py /wg_gen.py
 RUN chmod +x /entrypoint-tailscale.sh
 
-EXPOSE 5000
+EXPOSE 10000
 
 CMD ["/entrypoint-tailscale.sh"]
